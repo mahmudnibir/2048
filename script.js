@@ -35,6 +35,22 @@ class Game2048 {
         // Leaderboard
         this.leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
         
+        // Initialize sounds
+        this.sounds = {
+            slide: new Audio('sounds/slide.mp3'),
+            merge: new Audio('sounds/merge.wav'),
+            buttonClick: new Audio('sounds/button_click.wav'),
+            gameOver: new Audio('sounds/game_over.wav')
+        };
+        
+        // Set volume for all sounds
+        Object.values(this.sounds).forEach(sound => {
+            sound.volume = 0.3; // Set a comfortable default volume
+        });
+        
+        // Sound state
+        this.isSoundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+        
         this.setupGame();
         this.setupEventListeners();
         this.updateStats();
@@ -121,12 +137,20 @@ class Game2048 {
 
         // Touch controls
         let touchStartX, touchStartY, touchStartTime;
+        let isTouchMove = false;
         
         this.gridContainer.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
             touchStartTime = Date.now();
-        });
+            isTouchMove = false;
+        }, { passive: false });
+
+        this.gridContainer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            isTouchMove = true;
+        }, { passive: false });
 
         this.gridContainer.addEventListener('touchend', (e) => {
             if (!touchStartX || !touchStartY || this.gameOver) return;
@@ -139,8 +163,15 @@ class Game2048 {
             const deltaY = touchEndY - touchStartY;
             const deltaTime = touchEndTime - touchStartTime;
             
-            if ((Math.abs(deltaX) > 30 || Math.abs(deltaY) > 30) && deltaTime < 500) {
+            // Minimum swipe distance and maximum swipe time
+            const minSwipeDistance = 30;
+            const maxSwipeTime = 500;
+            
+            if ((Math.abs(deltaX) > minSwipeDistance || Math.abs(deltaY) > minSwipeDistance) && 
+                deltaTime < maxSwipeTime && isTouchMove) {
                 let moved = false;
+                
+                // Determine if horizontal or vertical swipe based on which delta is larger
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
                     moved = this.move(deltaX > 0 ? 'right' : 'left');
                 } else {
@@ -155,22 +186,62 @@ class Game2048 {
                     this.afterMove();
                 }
             }
+            
+            // Reset touch tracking
+            touchStartX = null;
+            touchStartY = null;
+            isTouchMove = false;
         });
 
-        // Button controls
-        document.getElementById('new-game').addEventListener('click', () => this.resetGame());
-        document.getElementById('undo').addEventListener('click', () => this.undo());
-        document.getElementById('try-again').addEventListener('click', () => this.resetGame());
+        // Button controls with sound
+        document.getElementById('new-game').addEventListener('click', () => {
+            this.playSound('buttonClick');
+            this.resetGame();
+        });
+        document.getElementById('undo').addEventListener('click', () => {
+            this.playSound('buttonClick');
+            this.undo();
+        });
+        document.getElementById('try-again').addEventListener('click', () => {
+            this.playSound('buttonClick');
+            this.resetGame();
+        });
         document.getElementById('keep-playing').addEventListener('click', () => {
+            this.playSound('buttonClick');
             this.gameWonMessage.classList.remove('active');
         });
-        document.getElementById('help-btn').addEventListener('click', () => this.toggleHelp());
-        document.getElementById('close-help').addEventListener('click', () => this.toggleHelp());
+        document.getElementById('help-btn').addEventListener('click', () => {
+            this.playSound('buttonClick');
+            this.toggleHelp();
+        });
+        document.getElementById('close-help').addEventListener('click', () => {
+            this.playSound('buttonClick');
+            this.toggleHelp();
+        });
 
-        // Theme controls
-        document.getElementById('theme-btn').addEventListener('click', () => this.cycleTheme());
+        // Theme controls with sound
+        document.getElementById('theme-btn').addEventListener('click', () => {
+            this.playSound('buttonClick');
+            this.cycleTheme();
+        });
         document.querySelectorAll('.theme-option').forEach(option => {
-            option.addEventListener('click', () => this.setTheme(option.dataset.theme));
+            option.addEventListener('click', () => {
+                this.playSound('buttonClick');
+                this.setTheme(option.dataset.theme);
+            });
+        });
+
+        // Sound toggle
+        const soundBtn = document.getElementById('sound-btn');
+        const updateSoundIcon = () => {
+            soundBtn.innerHTML = `<i class="fas fa-volume-${this.isSoundEnabled ? 'up' : 'mute'}"></i> Sound`;
+        };
+        updateSoundIcon(); // Set initial state
+
+        soundBtn.addEventListener('click', () => {
+            this.playSound('buttonClick');
+            this.toggleSound();
+            updateSoundIcon();
         });
     }
 
@@ -236,6 +307,7 @@ class Game2048 {
         });
 
         let moved = false;
+        let hasMerged = false;
         const vector = this.getVector(direction);
         const traversals = this.buildTraversals(vector);
 
@@ -263,6 +335,7 @@ class Game2048 {
                             
                             // Mark as merged
                             this.mergedTiles.add(mergeKey);
+                            hasMerged = true;
                             
                             // Update score
                             this.score += merged;
@@ -286,6 +359,13 @@ class Game2048 {
         });
 
         if (moved) {
+            // Play appropriate sound
+            if (hasMerged) {
+                this.playSound('merge');
+            } else {
+                this.playSound('slide');
+            }
+            
             this.updateScore();
             this.renderGrid();
             return true;
@@ -371,6 +451,7 @@ class Game2048 {
         if (!this.movesAvailable()) {
             this.gameOver = true;
             this.gameOverMessage.classList.add('active');
+            this.playSound('gameOver');
             this.gamesPlayed++;
             this.totalScore += this.score;
             this.updateLeaderboard();
@@ -523,6 +604,21 @@ class Game2048 {
                 <span>${entry.date}</span>
             </div>
         `).join('');
+    }
+
+    // Add sound helper methods
+    playSound(soundName) {
+        if (this.isSoundEnabled && this.sounds[soundName]) {
+            // Clone and play the sound to allow overlapping
+            const sound = this.sounds[soundName].cloneNode();
+            sound.play().catch(e => console.log('Sound play prevented:', e));
+        }
+    }
+
+    toggleSound() {
+        this.isSoundEnabled = !this.isSoundEnabled;
+        localStorage.setItem('soundEnabled', this.isSoundEnabled);
+        return this.isSoundEnabled;
     }
 }
 
