@@ -56,13 +56,14 @@ cd 2048
 
 3️⃣ Start playing!
 
+---
 
-## Technologies Used
+###  Technologies Used
 
-- HTML5
-- CSS3 (with Grid Layout and Animations)
-- Vanilla JavaScript (ES6+)
-- Local Storage for score persistence
+- **[HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)** – The backbone of the project, ensuring a semantic and accessible structure.
+- **[CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS3)** – Styled with modern techniques like Grid Layout and smooth Animations that make it pop.
+- **[JavaScript (ES6+)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)** – Using modern Vanilla JS to keep things interactive and lit.
+- **[Local Storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)** – Keeping your scores on lock for that persistent gaming vibe.
 
 ---
 
