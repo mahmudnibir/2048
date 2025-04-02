@@ -1,4 +1,22 @@
 # 2048 Game
+---
+
+![GitHub status](https://img.shields.io/badge/status-completed-brightgreen.svg) 
+![GitHub Repo stars](https://img.shields.io/github/stars/mahmudnibir/2048?style=social) 
+![GitHub contributors](https://img.shields.io/github/contributors/mahmudnibir/2048)
+![GitHub issues](https://img.shields.io/github/issues/mahmudnibir/2048)
+![GitHub forks](https://img.shields.io/github/forks/mahmudnibir/2048?style=social)
+![GitHub last commit](https://img.shields.io/github/last-commit/mahmudnibir/2048)
+![GitHub license](https://img.shields.io/github/license/mahmudnibir/2048)
+![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mahmudnibir/2048)
+![GitHub Code Size](https://img.shields.io/github/languages/code-size/mahmudnibir/2048)
+![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20windows-blue) 
+
+---
+> [!NOTE]
+ This project is intended for learning and experimentation. Please use it responsibly and ethically.
+
+--- 
 
 A modern implementation of the classic 2048 puzzle game, built with HTML, CSS, and JavaScript.
 
@@ -28,13 +46,55 @@ A modern implementation of the classic 2048 puzzle game, built with HTML, CSS, a
 
 ## Installation
 
-1. Clone this repository
-2. Open `index.html` in your web browser
-3. Start playing!
+1️⃣ Clone the repository and navigate into it:  
+
+```bash
+git clone https://github.com/mahmudnibir/2048.git
+cd 2048
+```
+2️⃣ Open `index.html` in your web browser
+
+3️⃣ Start playing!
+
 
 ## Technologies Used
 
 - HTML5
 - CSS3 (with Grid Layout and Animations)
 - Vanilla JavaScript (ES6+)
-- Local Storage for score persistence 
+- Local Storage for score persistence
+
+---
+
+> [!TIP]
+If you find this project helpful, **please consider giving it a star ⭐ on GitHub!** It helps others discover the project.  
+
+## Contribution Guidelines  
+
+ **Want to improve the script?** Contributions are welcome!  
+
+### **📌 How to Contribute**  
+| Step | Action |
+|------|--------|
+| 🏗 **Fork** | Clone the repo & create a new branch |
+| 🔧 **Develop** | Make your changes, write clear commit messages |
+| 📌 **Push** | Push to your fork & create a PR |
+| 🚀 **Review** | Wait for approval & merge |
+
+
+
+## License  
+
+📝 This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.  
+
+
+## Contact  
+*Developed by [Nibir Mahmud](https://github.com/mahmudnibir)*
+
+
+**Email**: [nibirbbkr@gmail.com](mailto:nibirbbkr@gmail.com)  
+**Github**: [@mahmudnibir](https://github.com/mahmudnibir)    
+
+
+
+---
