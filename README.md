@@ -1,5 +1,4 @@
-# 2048 Game
----
+
 
 ![GitHub status](https://img.shields.io/badge/status-completed-brightgreen.svg) 
 ![GitHub Repo stars](https://img.shields.io/github/stars/mahmudnibir/2048?style=social) 
@@ -13,9 +12,11 @@
 ![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20windows-blue) 
 
 ---
-> [!NOTE]
- This project is intended for learning and experimentation. Please use it responsibly and ethically.
+# 2048 Game
 
+
+> [!NOTE]
+ This project is intended for learning and experimentation.
 --- 
 
 A modern implementation of the classic 2048 puzzle game, built with HTML, CSS, and JavaScript.
@@ -36,6 +37,8 @@ A modern implementation of the classic 2048 puzzle game, built with HTML, CSS, a
 - Responsive design that works on all devices
 - Game state preservation
 - Clean, modern UI
+
+<img src="img/Screenshot 2025-03-15 021116.png" alt="2048" width="500">
 
 ## Controls
 
