@@ -5,6 +5,7 @@ const urlsToCache = [
   './style.css',
   './script.js',
   './manifest.json',
+  './img/2048.png',
   './sounds/slide.mp3',
   './sounds/merge.wav',
   './sounds/button_click.wav',
@@ -92,8 +93,8 @@ self.addEventListener('sync', event => {
 self.addEventListener('push', event => {
   const options = {
     body: event.data ? event.data.text() : 'New daily challenge available!',
-    icon: './icons/icon-192x192.png',
-    badge: './icons/icon-72x72.png',
+    icon: './img/2048.png',
+    badge: './img/2048.png',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
