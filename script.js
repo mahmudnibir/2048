@@ -1,6 +1,6 @@
 class Game2048 {
     constructor() {
-        this.gridSize = 4;
+        this.gridSize = parseInt(localStorage.getItem('gridSize')) || 4;
         this.gridContainer = document.getElementById('grid-container');
         this.scoreElement = document.getElementById('score');
         this.bestScoreElement = document.getElementById('best-score');
@@ -24,11 +24,16 @@ class Game2048 {
         this.moveHistory = [];
         this.mergedTiles = new Set();
         
-        // Stats
+        // Advanced Stats
         this.gamesPlayed = parseInt(localStorage.getItem('gamesPlayed')) || 0;
+        this.gamesWon = parseInt(localStorage.getItem('gamesWon')) || 0;
         this.movesMade = 0;
         this.totalMoves = parseInt(localStorage.getItem('totalMoves')) || 0;
         this.totalScore = parseInt(localStorage.getItem('totalScore')) || 0;
+        this.totalGameTime = parseInt(localStorage.getItem('totalGameTime')) || 0;
+        this.currentStreak = parseInt(localStorage.getItem('currentStreak')) || 0;
+        this.bestStreak = parseInt(localStorage.getItem('bestStreak')) || 0;
+        this.highestTileEver = parseInt(localStorage.getItem('highestTileEver')) || 2;
         this.startTime = Date.now();
         this.totalTimePlayed = parseInt(localStorage.getItem('totalTimePlayed')) || 0;
         
@@ -48,17 +53,30 @@ class Game2048 {
             sound.volume = 0.3; // Set a comfortable default volume
         });
         
-        // Sound state
-        this.isSoundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+        // Sound is always enabled
+        
+        // Achievement system
+        this.achievements = {
+            128: { title: "Getting Started", description: "Reach 128", unlocked: false },
+            256: { title: "Building Up", description: "Reach 256", unlocked: false },
+            512: { title: "Half Way", description: "Reach 512", unlocked: false },
+            1024: { title: "Almost There", description: "Reach 1024", unlocked: false },
+            2048: { title: "Victory!", description: "Reach 2048", unlocked: false }
+        };
+        this.loadAchievements();
         
         this.setupGame();
         this.setupEventListeners();
         this.updateStats();
         this.renderLeaderboard();
+        this.updateAchievementDisplay();
         this.startTimer();
     }
 
     setupGame() {
+        // Set grid container class based on size
+        this.gridContainer.className = `grid-container grid-${this.gridSize}x${this.gridSize}`;
+        
         // Create grid cells
         this.gridContainer.innerHTML = '';
         for (let i = 0; i < this.gridSize * this.gridSize; i++) {
@@ -70,12 +88,23 @@ class Game2048 {
         // Initialize grid array
         this.grid = Array(this.gridSize).fill().map(() => Array(this.gridSize).fill(0));
         this.score = 0;
+        this.gameOver = false;
+        this.won = false;
+        this.movesMade = 0;
+        this.moveHistory = [];
         this.updateScore();
         this.bestScoreElement.textContent = this.bestScore;
+
+        // Hide game messages
+        this.gameOverMessage.classList.remove('active');
+        this.gameWonMessage.classList.remove('active');
 
         // Add initial tiles
         this.addRandomTile();
         this.addRandomTile();
+        
+        // Render the complete grid
+        this.renderGrid();
     }
 
     setupEventListeners() {
@@ -231,18 +260,19 @@ class Game2048 {
             });
         });
 
-        // Sound toggle
-        const soundBtn = document.getElementById('sound-btn');
-        const updateSoundIcon = () => {
-            soundBtn.innerHTML = `<i class="fas fa-volume-${this.isSoundEnabled ? 'up' : 'mute'}"></i> Sound`;
-        };
-        updateSoundIcon(); // Set initial state
-
-        soundBtn.addEventListener('click', () => {
-            this.playSound('buttonClick');
-            this.toggleSound();
-            updateSoundIcon();
-        });
+        // Grid size selector
+        const gridSizeSelect = document.getElementById('grid-size');
+        if (gridSizeSelect) {
+            gridSizeSelect.value = this.gridSize;
+            console.log('Grid size selector found, setting value to:', this.gridSize);
+            gridSizeSelect.addEventListener('change', (e) => {
+                console.log('Grid size changed to:', e.target.value);
+                this.playSound('buttonClick');
+                this.changeGridSize(parseInt(e.target.value));
+            });
+        } else {
+            console.error('Grid size selector not found!');
+        }
     }
 
     addRandomTile() {
@@ -266,6 +296,8 @@ class Game2048 {
         const position = x * this.gridSize + y;
         const cell = this.gridContainer.children[position];
         
+        if (!cell) return; // Safety check
+        
         // Remove existing tile if any
         const existingTile = cell.querySelector('.tile');
         if (existingTile) {
@@ -276,8 +308,10 @@ class Game2048 {
             const tile = document.createElement('div');
             tile.className = `tile tile-${value}${isNew ? ' tile-new' : ''}`;
             
-            // Add transition for smooth movement
-            tile.style.transition = 'all 0.15s ease-in-out';
+            // Use CSS Grid positioning - the cell already handles position
+            tile.style.width = '100%';
+            tile.style.height = '100%';
+            tile.style.position = 'relative';
             
             const span = document.createElement('span');
             span.textContent = value.toLocaleString();
@@ -366,6 +400,10 @@ class Game2048 {
                 this.playSound('slide');
             }
             
+            // Check for achievements after successful moves
+            const highestTile = this.getHighestTile();
+            this.checkAchievements(highestTile);
+            
             this.updateScore();
             this.renderGrid();
             return true;
@@ -448,18 +486,42 @@ class Game2048 {
 
     afterMove() {
         this.addRandomTile();
+        this.updateUndoButton();
+        
+        // Update highest tile achieved
+        const currentHighest = this.getHighestTile();
+        if (currentHighest > this.highestTileEver) {
+            this.highestTileEver = currentHighest;
+        }
+        
         if (!this.movesAvailable()) {
             this.gameOver = true;
             this.gameOverMessage.classList.add('active');
             this.playSound('gameOver');
+            
+            // Track game completion stats
+            const gameTime = Math.floor((Date.now() - this.startTime) / 1000);
             this.gamesPlayed++;
             this.totalScore += this.score;
+            this.totalGameTime += gameTime;
+            
+            // Check if won (reached 2048)
+            if (this.won) {
+                this.gamesWon++;
+                this.currentStreak++;
+                if (this.currentStreak > this.bestStreak) {
+                    this.bestStreak = this.currentStreak;
+                }
+            } else {
+                this.currentStreak = 0;
+            }
+            
             this.updateLeaderboard();
             this.updateStats();
             
             // Update final stats
             this.finalScoreElement.textContent = this.score;
-            this.highestTileElement.textContent = Math.max(...this.grid.flat());
+            this.highestTileElement.textContent = currentHighest;
             
             // Save final score if it's a new best
             if (this.score > this.bestScore) {
@@ -541,14 +603,66 @@ class Game2048 {
     }
 
     updateStats() {
-        this.movesMadeElement.textContent = this.movesMade;
-        this.gamesPlayedElement.textContent = this.gamesPlayed;
-        this.avgScoreElement.textContent = this.gamesPlayed ? 
-            Math.round(this.totalScore / this.gamesPlayed) : 0;
+        // Basic stats
+        const gamesPlayedEl = document.getElementById('games-played');
+        const gamesWonEl = document.getElementById('games-won');
+        const winRateEl = document.getElementById('win-rate');
+        const avgScoreEl = document.getElementById('avg-score');
+        const avgMovesEl = document.getElementById('avg-moves');
+        const avgTimeEl = document.getElementById('avg-time');
+        const currentStreakEl = document.getElementById('current-streak');
+        const bestStreakEl = document.getElementById('best-streak');
+
+        if (gamesPlayedEl) gamesPlayedEl.textContent = this.gamesPlayed;
+        if (gamesWonEl) gamesWonEl.textContent = this.gamesWon;
         
+        const winRate = this.gamesPlayed ? Math.round((this.gamesWon / this.gamesPlayed) * 100) : 0;
+        if (winRateEl) winRateEl.textContent = `${winRate}%`;
+        
+        const avgScore = this.gamesPlayed ? Math.round(this.totalScore / this.gamesPlayed) : 0;
+        if (avgScoreEl) avgScoreEl.textContent = avgScore;
+        
+        const avgMoves = this.gamesPlayed ? Math.round(this.totalMoves / this.gamesPlayed) : 0;
+        if (avgMovesEl) avgMovesEl.textContent = avgMoves;
+        
+        const avgGameTime = this.gamesPlayed ? Math.round(this.totalGameTime / this.gamesPlayed) : 0;
+        const avgMinutes = Math.floor(avgGameTime / 60);
+        const avgSeconds = avgGameTime % 60;
+        if (avgTimeEl) avgTimeEl.textContent = `${avgMinutes}:${avgSeconds.toString().padStart(2, '0')}`;
+        
+        if (currentStreakEl) currentStreakEl.textContent = this.currentStreak;
+        if (bestStreakEl) bestStreakEl.textContent = this.bestStreak;
+
+        // Performance metrics
+        this.updatePerformanceMetrics();
+        
+        // Save to localStorage
         localStorage.setItem('totalMoves', this.totalMoves);
         localStorage.setItem('gamesPlayed', this.gamesPlayed);
+        localStorage.setItem('gamesWon', this.gamesWon);
         localStorage.setItem('totalScore', this.totalScore);
+        localStorage.setItem('totalGameTime', this.totalGameTime);
+        localStorage.setItem('currentStreak', this.currentStreak);
+        localStorage.setItem('bestStreak', this.bestStreak);
+        localStorage.setItem('highestTileEver', this.highestTileEver);
+    }
+
+    updatePerformanceMetrics() {
+        const efficiencyEl = document.getElementById('efficiency-rating');
+        const speedEl = document.getElementById('speed-rating');
+        const highestEl = document.getElementById('highest-achieved');
+
+        // Efficiency: Average score per move
+        const efficiency = this.totalMoves ? Math.round(this.totalScore / this.totalMoves) : 0;
+        if (efficiencyEl) efficiencyEl.textContent = efficiency;
+
+        // Speed: Average score per minute
+        const totalMinutes = this.totalGameTime / 60;
+        const speed = totalMinutes ? Math.round(this.totalScore / totalMinutes) : 0;
+        if (speedEl) speedEl.textContent = speed;
+
+        // Highest tile achieved
+        if (highestEl) highestEl.textContent = this.highestTileEver;
     }
 
     startTimer() {
@@ -608,17 +722,164 @@ class Game2048 {
 
     // Add sound helper methods
     playSound(soundName) {
-        if (this.isSoundEnabled && this.sounds[soundName]) {
+        if (this.sounds[soundName]) {
             // Clone and play the sound to allow overlapping
             const sound = this.sounds[soundName].cloneNode();
             sound.play().catch(e => console.log('Sound play prevented:', e));
         }
     }
 
-    toggleSound() {
-        this.isSoundEnabled = !this.isSoundEnabled;
-        localStorage.setItem('soundEnabled', this.isSoundEnabled);
-        return this.isSoundEnabled;
+    getHighestTile() {
+        let highest = 0;
+        for (let i = 0; i < this.gridSize; i++) {
+            for (let j = 0; j < this.gridSize; j++) {
+                if (this.grid[i][j] > highest) {
+                    highest = this.grid[i][j];
+                }
+            }
+        }
+        return highest;
+    }
+
+    changeGridSize(newSize) {
+        console.log('Changing grid size to:', newSize);
+        console.log('Current grid container:', this.gridContainer);
+        
+        // Store previous game state if needed
+        if (!this.gameOver) {
+            this.gamesPlayed++;
+            this.totalScore += this.score;
+        }
+        
+        this.gridSize = newSize;
+        localStorage.setItem('gridSize', newSize);
+        
+        // Force clear the grid container completely
+        this.gridContainer.innerHTML = '';
+        this.gridContainer.className = 'grid-container';
+        
+        // Force a reflow
+        this.gridContainer.offsetHeight;
+        
+        // Reset and setup new game
+        this.setupGame();
+        
+        // Add initial tiles and render
+        this.addRandomTile();
+        this.addRandomTile();
+        this.renderGrid();
+        this.updateAchievementDisplay();
+        
+        console.log('Grid container class after setup:', this.gridContainer.className);
+        console.log('Number of grid cells created:', this.gridContainer.children.length);
+        console.log('Expected cells:', newSize * newSize);
+    }
+
+    undo() {
+        if (this.moveHistory.length > 0 && !this.gameOver) {
+            const previousState = this.moveHistory.pop();
+            this.grid = previousState.grid;
+            this.score = previousState.score;
+            this.updateScore();
+            this.renderGrid();
+            
+            // Update undo button state
+            this.updateUndoButton();
+        }
+    }
+
+    updateUndoButton() {
+        const undoBtn = document.getElementById('undo');
+        if (undoBtn) {
+            undoBtn.disabled = this.moveHistory.length === 0 || this.gameOver;
+            undoBtn.style.opacity = undoBtn.disabled ? '0.5' : '1';
+        }
+    }
+
+    // Achievement system methods
+    loadAchievements() {
+        const saved = localStorage.getItem('achievements');
+        if (saved) {
+            const savedAchievements = JSON.parse(saved);
+            Object.keys(this.achievements).forEach(score => {
+                if (savedAchievements[score]) {
+                    this.achievements[score].unlocked = savedAchievements[score].unlocked;
+                }
+            });
+        }
+    }
+
+    saveAchievements() {
+        localStorage.setItem('achievements', JSON.stringify(this.achievements));
+    }
+
+    checkAchievements(highestTile) {
+        Object.keys(this.achievements).forEach(targetScore => {
+            const target = parseInt(targetScore);
+            if (highestTile >= target && !this.achievements[target].unlocked) {
+                this.unlockAchievement(target);
+            }
+        });
+    }
+
+    unlockAchievement(score) {
+        this.achievements[score].unlocked = true;
+        this.saveAchievements();
+        this.showAchievementNotification(score);
+        this.updateAchievementDisplay();
+        this.playSound('buttonClick');
+    }
+
+    showAchievementNotification(score) {
+        const achievement = this.achievements[score];
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'achievement-notification';
+        notification.innerHTML = `
+            <div class="achievement-notification-content">
+                <i class="fas fa-trophy achievement-notification-icon"></i>
+                <div class="achievement-notification-text">
+                    <div class="achievement-notification-title">Achievement Unlocked!</div>
+                    <div class="achievement-notification-subtitle">${achievement.title}</div>
+                    <div class="achievement-notification-description">${achievement.description}</div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => notification.classList.add('show'), 100);
+        
+        // Remove after 4 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 4000);
+    }
+
+    updateAchievementDisplay() {
+        const achievementsList = document.getElementById('achievements-list');
+        if (!achievementsList) return;
+        
+        Object.keys(this.achievements).forEach(score => {
+            const achievement = this.achievements[score];
+            const element = achievementsList.querySelector(`[data-score="${score}"]`);
+            if (element) {
+                if (achievement.unlocked) {
+                    element.classList.add('unlocked');
+                    element.title = `${achievement.title} - ${achievement.description} ✓`;
+                } else {
+                    element.classList.remove('unlocked');
+                    element.title = `${achievement.title} - ${achievement.description}`;
+                }
+            }
+        });
     }
 }
 

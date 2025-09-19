@@ -1,0 +1,33 @@
+{
+  "name": "2048 Professional - The Ultimate Tile Game",
+  "short_name": "2048 Pro",
+  "description": "Professional 2048 game with multiple grid sizes, advanced statistics, and offline play",
+  "version": "2.0.0",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#8B4513",
+  "theme_color": "#5D4E37",
+  "orientation": "any",
+  "categories": ["games", "puzzle"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "img/2048.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "img/2048.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
