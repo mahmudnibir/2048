@@ -830,14 +830,7 @@ button.loading::after {
         margin-bottom: 20px;
     }
 
-    .sidebar {
-        position: static;
-        transform: none;
-        margin-top: 30px;
-        width: 100%;
-        max-width: 500px;
-        margin: 20px auto 0;
-    }
+
 
 
 
@@ -905,15 +898,7 @@ button.loading::after {
     }
 }
 
-.pulse {
-    animation: pulse 2s infinite;
-}
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
-}
 
 /* Add subtle glow effect for high value tiles */
 .tile-512, .tile-1024, .tile-2048 {
@@ -938,22 +923,7 @@ button.loading::after {
     100% { opacity: 0.8; }
 }
 
-/* Add styles for new features */
-.sidebar {
-    position: fixed;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    z-index: 90;
-}
+
 
 
 
@@ -1185,15 +1155,7 @@ button.loading::after {
     opacity: 1;
 }
 
-/* Responsive design for new features */
-@media (max-width: 1200px) {
-    .sidebar {
-        position: static;
-        transform: none;
-        margin-top: 30px;
-        width: 100%;
-    }
-}
+
 
 .final-stats {
     display: flex;

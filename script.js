@@ -10,7 +10,6 @@ class Game2048 {
         // Stats elements
         this.gamesPlayedElement = document.getElementById('games-played');
         this.movesMadeElement = document.getElementById('moves-made');
-        this.timePlayedElement = document.getElementById('time-played');
         this.avgScoreElement = document.getElementById('avg-score');
         this.finalScoreElement = document.getElementById('final-score');
         this.highestTileElement = document.getElementById('highest-tile');
@@ -35,7 +34,7 @@ class Game2048 {
         this.bestStreak = parseInt(localStorage.getItem('bestStreak')) || 0;
         this.highestTileEver = parseInt(localStorage.getItem('highestTileEver')) || 2;
         this.startTime = Date.now();
-        this.totalTimePlayed = parseInt(localStorage.getItem('totalTimePlayed')) || 0;
+
         
         // Leaderboard
         this.leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
@@ -70,7 +69,6 @@ class Game2048 {
         this.updateStats();
         this.renderLeaderboard();
         this.updateAchievementDisplay();
-        this.startTimer();
     }
 
     setupGame() {
@@ -150,10 +148,7 @@ class Game2048 {
                 case 'H':
                     this.toggleHelp();
                     break;
-                case 't':
-                case 'T':
-                    this.cycleTheme();
-                    break;
+
             }
 
             if (moved) {
@@ -248,17 +243,7 @@ class Game2048 {
             this.toggleHelp();
         });
 
-        // Theme controls with sound
-        document.getElementById('theme-btn').addEventListener('click', () => {
-            this.playSound('buttonClick');
-            this.cycleTheme();
-        });
-        document.querySelectorAll('.theme-option').forEach(option => {
-            option.addEventListener('click', () => {
-                this.playSound('buttonClick');
-                this.setTheme(option.dataset.theme);
-            });
-        });
+
 
         // Grid size selector
         const gridSizeSelect = document.getElementById('grid-size');
@@ -665,35 +650,14 @@ class Game2048 {
         if (highestEl) highestEl.textContent = this.highestTileEver;
     }
 
-    startTimer() {
-        setInterval(() => {
-            const totalSeconds = Math.floor((Date.now() - this.startTime) / 1000) + this.totalTimePlayed;
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
-            this.timePlayedElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            localStorage.setItem('totalTimePlayed', totalSeconds);
-        }, 1000);
-    }
+
 
     toggleHelp() {
         const helpOverlay = document.getElementById('help-overlay');
         helpOverlay.style.display = helpOverlay.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    setTheme(theme) {
-        document.body.className = `theme-${theme}`;
-        document.querySelectorAll('.theme-option').forEach(option => {
-            option.classList.toggle('active', option.dataset.theme === theme);
-        });
-        localStorage.setItem('theme', theme);
-    }
 
-    cycleTheme() {
-        const themes = ['dark', 'light', 'neon'];
-        const currentTheme = document.body.className.replace('theme-', '');
-        const nextTheme = themes[(themes.indexOf(currentTheme) + 1) % themes.length];
-        this.setTheme(nextTheme);
-    }
 
     updateLeaderboard() {
         this.leaderboard.push({
@@ -887,7 +851,5 @@ class Game2048 {
 window.addEventListener('load', () => {
     const game = new Game2048();
     
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    game.setTheme(savedTheme);
+
 }); 
