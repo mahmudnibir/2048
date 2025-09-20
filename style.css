@@ -1341,4 +1341,376 @@ button.loading::after {
     background: linear-gradient(135deg, #DEB887, #CD853F);
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(139, 69, 19, 0.3);
+}
+
+/* Footer Styles */
+.game-footer {
+    margin-top: 30px;
+    background: rgba(139, 69, 19, 0.95);
+    border-top: 3px solid #8B4513;
+    padding: 25px 0;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border-radius: 15px 15px 0 0;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    color: #F5DEB3;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: rgba(245, 222, 179, 0.15);
+    border: 2px solid rgba(245, 222, 179, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-link:hover {
+    background: rgba(245, 222, 179, 0.25);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    border-color: rgba(245, 222, 179, 0.5);
+}
+
+.footer-link i {
+    font-size: 14px;
+}
+
+.footer-copyright {
+    color: #DEB887;
+    font-size: 13px;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Legal Pages Styles */
+.legal-page {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(245, 222, 179, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 3px solid #8B4513;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    margin-bottom: 80px; /* Space for footer */
+}
+
+.legal-header {
+    background: linear-gradient(135deg, #8B4513, #A0522D);
+    color: #F5DEB3;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.back-link {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    color: #F5DEB3;
+    text-decoration: none;
+    padding: 10px 15px;
+    background: rgba(245, 222, 179, 0.2);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    background: rgba(245, 222, 179, 0.3);
+    transform: translateY(-2px);
+}
+
+.legal-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.last-updated {
+    margin-top: 10px;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.legal-content {
+    padding: 40px;
+    line-height: 1.8;
+}
+
+.legal-section {
+    margin-bottom: 40px;
+}
+
+.legal-section h2 {
+    color: #8B4513;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #DEB887;
+}
+
+.legal-section h3 {
+    color: #A0522D;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 25px 0 15px 0;
+}
+
+.legal-section ul, .legal-section ol {
+    margin: 15px 0 15px 30px;
+}
+
+.legal-section li {
+    margin-bottom: 8px;
+}
+
+.legal-section p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* Feature Grid for About Page */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.feature-item {
+    background: rgba(139, 69, 19, 0.1);
+    padding: 25px;
+    border-radius: 15px;
+    border: 2px solid rgba(139, 69, 19, 0.2);
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(139, 69, 19, 0.2);
+    border-color: #8B4513;
+}
+
+.feature-item i {
+    font-size: 2em;
+    color: #8B4513;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.feature-item h3 {
+    color: #8B4513;
+    margin-bottom: 10px;
+}
+
+/* Gameplay Information Styles */
+.gameplay-info {
+    display: grid;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.gameplay-objective, .gameplay-controls, .gameplay-tips {
+    background: rgba(139, 69, 19, 0.05);
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 5px solid #8B4513;
+}
+
+.controls-list {
+    display: grid;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.control-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: rgba(245, 222, 179, 0.3);
+    border-radius: 8px;
+}
+
+.control-key {
+    font-weight: bold;
+    color: #8B4513;
+    background: rgba(139, 69, 19, 0.1);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+}
+
+/* Technical Specifications */
+.tech-specs {
+    background: rgba(139, 69, 19, 0.05);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.tech-specs h3 {
+    color: #8B4513;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.tech-specs h3:first-child {
+    margin-top: 0;
+}
+
+/* Installation Steps */
+.installation-steps {
+    margin: 20px 0;
+}
+
+.installation-steps h3 {
+    color: #8B4513;
+    margin: 25px 0 15px 0;
+}
+
+.installation-steps ol {
+    background: rgba(139, 69, 19, 0.05);
+    padding: 20px 20px 20px 50px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+/* Contact and Version Info */
+.contact-info, .version-info {
+    background: rgba(139, 69, 19, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* Legal Footer */
+.legal-footer {
+    background: linear-gradient(135deg, #8B4513, #A0522D);
+    color: #F5DEB3;
+    padding: 30px;
+    text-align: center;
+}
+
+.legal-footer .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.legal-footer .footer-links a {
+    color: #F5DEB3;
+    text-decoration: none;
+    padding: 10px 20px;
+    background: rgba(245, 222, 179, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.legal-footer .footer-links a:hover {
+    background: rgba(245, 222, 179, 0.2);
+    transform: translateY(-2px);
+}
+
+.legal-footer .copyright {
+    margin: 0;
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+/* Responsive Design for Footer and Legal Pages */
+@media (max-width: 768px) {
+    .footer-links {
+        gap: 15px;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer-link {
+        padding: 10px 15px;
+        font-size: 14px;
+        width: 150px;
+        justify-content: center;
+    }
+    
+    .legal-page {
+        margin: 20px;
+        margin-bottom: 40px;
+    }
+    
+    .legal-header {
+        padding: 20px;
+    }
+    
+    .back-link {
+        position: static;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    
+    .legal-header h1 {
+        font-size: 2em;
+    }
+    
+    .legal-content {
+        padding: 20px;
+    }
+    
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .footer-links {
+        gap: 20px;
+    }
+    
+    .legal-footer .footer-links {
+        gap: 15px;
+    }
+    
+    .legal-footer .footer-links a {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .control-item {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
 } 

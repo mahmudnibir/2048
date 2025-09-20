@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - 2048 Professional</title>
+    <meta name="description" content="About 2048 Professional - The Ultimate Tile Game and its development team">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#5D4E37">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="2048 Pro">
+    <meta name="msapplication-TileColor" content="#8B4513">
+    
+    <!-- Icons -->
+    <link rel="icon" href="img/2048.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="192x192" href="img/2048.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="img/2048.png">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="legal-page">
+            <div class="legal-header">
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Game
+                </a>
+                <h1><i class="fas fa-info-circle"></i> About 2048 Professional</h1>
+                <p class="last-updated">Version 1.0 - September 2025</p>
+            </div>
+
+            <div class="legal-content">
+                <section class="legal-section">
+                    <h2>Welcome to 2048 Professional</h2>
+                    <p>2048 Professional is the ultimate version of the classic 2048 puzzle game, featuring enhanced gameplay mechanics, beautiful design, and professional-grade features that make it the definitive 2048 experience.</p>
+                </section>
+
+                <section class="legal-section">
+                    <h2>🎮 Game Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-th-large"></i>
+                            <h3>Multiple Grid Sizes</h3>
+                            <p>Play on 4x4, 5x5, or 6x6 grids for varying levels of challenge and complexity.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Advanced Statistics</h3>
+                            <p>Track your progress with detailed statistics, win rates, and performance metrics.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-trophy"></i>
+                            <h3>Achievement System</h3>
+                            <p>Unlock achievements and track your gaming milestones across all game modes.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-undo"></i>
+                            <h3>Undo Functionality</h3>
+                            <p>Made a mistake? Use the undo feature to reverse your last move and strategize better.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h3>Progressive Web App</h3>
+                            <p>Install the game on your device for offline play and a native app experience.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-palette"></i>
+                            <h3>Beautiful Design</h3>
+                            <p>Enjoy a rich, wood-themed interface with smooth animations and professional styling.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="legal-section">
+                    <h2>🕹️ How to Play</h2>
+                    <div class="gameplay-info">
+                        <div class="gameplay-objective">
+                            <h3>Objective</h3>
+                            <p>Combine numbered tiles by moving them in four directions. When two tiles with the same number touch, they merge into one tile with double the value. The goal is to create a tile with the number 2048!</p>
+                        </div>
+                        
+                        <div class="gameplay-controls">
+                            <h3>Controls</h3>
+                            <div class="controls-list">
+                                <div class="control-item">
+                                    <span class="control-key">Arrow Keys / WASD</span>
+                                    <span>Move tiles in four directions</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">Z</span>
+                                    <span>Undo last move</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">R</span>
+                                    <span>Start new game</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">H</span>
+                                    <span>Toggle help overlay</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gameplay-tips">
+                            <h3>Pro Tips</h3>
+                            <ul>
+                                <li>Keep your highest value tile in a corner</li>
+                                <li>Build up tiles in a cascading pattern</li>
+                                <li>Don't randomly swipe - plan your moves</li>
+                                <li>Use the undo feature to experiment with strategies</li>
+                                <li>Focus on merging smaller tiles first</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="legal-section">
+                    <h2>🏆 Achievements & Statistics</h2>
+                    <p>2048 Professional tracks comprehensive statistics to help you improve your gameplay:</p>
+                    <ul>
+                        <li><strong>Games Played:</strong> Total number of games started</li>
+                        <li><strong>Win Rate:</strong> Percentage of games where you reached 2048</li>
+                        <li><strong>Average Score:</strong> Mean score across all your games</li>
+                        <li><strong>Best Streak:</strong> Longest consecutive win streak</li>
+                        <li><strong>Efficiency Rating:</strong> How efficiently you reach high scores</li>
+                        <li><strong>Speed Rating:</strong> How quickly you complete games</li>
+                    </ul>
+                </section>
+
+                <section class="legal-section">
+                    <h2>🛠️ Technical Information</h2>
+                    <div class="tech-specs">
+                        <h3>Technology Stack</h3>
+                        <ul>
+                            <li><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript</li>
+                            <li><strong>Storage:</strong> Local Storage & IndexedDB for offline data</li>
+                            <li><strong>PWA:</strong> Service Worker for offline functionality</li>
+                            <li><strong>Animations:</strong> CSS transitions and transforms</li>
+                            <li><strong>Responsive:</strong> Mobile-first design approach</li>
+                        </ul>
+
+                        <h3>Browser Support</h3>
+                        <ul>
+                            <li>Chrome 70+ (recommended)</li>
+                            <li>Firefox 65+</li>
+                            <li>Safari 12+</li>
+                            <li>Edge 79+</li>
+                            <li>Mobile browsers (iOS Safari, Chrome Mobile)</li>
+                        </ul>
+
+                        <h3>Device Compatibility</h3>
+                        <ul>
+                            <li>Desktop computers (Windows, Mac, Linux)</li>
+                            <li>Tablets (iPad, Android tablets)</li>
+                            <li>Smartphones (iOS, Android)</li>
+                            <li>Touch and keyboard input supported</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="legal-section">
+                    <h2>📱 Installation & Offline Play</h2>
+                    <p>2048 Professional is a Progressive Web App (PWA) that can be installed on your device:</p>
+                    <div class="installation-steps">
+                        <h3>Desktop Installation</h3>
+                        <ol>
+                            <li>Click the install icon in your browser's address bar</li>
+                            <li>Or use the "Install App" button when prompted</li>
+                            <li>The game will be added to your desktop and start menu</li>
+                        </ol>
+
+                        <h3>Mobile Installation</h3>
+                        <ol>
+                            <li>Open the game in your mobile browser</li>
+                            <li>Tap "Add to Home Screen" when prompted</li>
+                            <li>Or use your browser's "Add to Home Screen" option</li>
+                            <li>The game icon will appear on your home screen</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section class="legal-section">
+                    <h2>🎯 Game History & Credits</h2>
+                    <p>The original 2048 game was created by Gabriele Cirulli in 2014, inspired by the game 1024 by Veewo Studio and conceptually similar to Threes! by Asher Vollmer.</p>
+                    
+                    <p>2048 Professional builds upon this classic formula with modern web technologies and enhanced features, while maintaining the core gameplay that made the original so addictive and enjoyable.</p>
+
+                    <h3>Special Thanks</h3>
+                    <ul>
+                        <li>Gabriele Cirulli for the original 2048 game concept</li>
+                        <li>The web development community for tools and libraries</li>
+                        <li>All players who provide feedback and suggestions</li>
+                        <li>Open source contributors who make projects like this possible</li>
+                    </ul>
+                </section>
+
+                <section class="legal-section">
+                    <h2>💬 Feedback & Contact</h2>
+                    <p>We're constantly working to improve 2048 Professional. Your feedback is valuable to us!</p>
+                    
+                    <div class="contact-info">
+                        <h3>How to Reach Us</h3>
+                        <ul>
+                            <li>Leave feedback through the in-game settings menu</li>
+                            <li>Report bugs or suggest features via GitHub issues</li>
+                            <li>Share your high scores on social media</li>
+                            <li>Rate and review the game if you enjoy playing</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-info">
+                        <h3>Version Information</h3>
+                        <p><strong>Current Version:</strong> 1.0.0</p>
+                        <p><strong>Release Date:</strong> September 2025</p>
+                        <p><strong>Last Updated:</strong> September 20, 2025</p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="legal-footer">
+                <div class="footer-links">
+                    <a href="index.html"><i class="fas fa-gamepad"></i> Play Game</a>
+                    <a href="terms.html"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                    <a href="privacy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                </div>
+                <p class="copyright">© 2025 2048 Professional. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
