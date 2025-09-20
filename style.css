@@ -169,42 +169,65 @@ h1 {
 
 
 .grid-size-selector {
-    margin: 15px 0;
+    margin: 20px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
+    background: rgba(245, 222, 179, 0.2);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 2px solid rgba(139, 69, 19, 0.2);
 }
 
 .grid-size-selector label {
     font-family: 'Playfair Display', serif;
     font-weight: 600;
     color: #8B4513;
-    font-size: 14px;
+    font-size: 16px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .grid-size-selector select {
-    background: linear-gradient(135deg, #F5DEB3, #DEB887);
-    border: 2px solid #CD853F;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-family: 'Crimson Text', serif;
-    font-size: 14px;
-    color: #654321;
+    background: linear-gradient(135deg, #F5DEB3 0%, #DEB887 50%, #CD853F 100%);
+    border: 3px solid #8B4513;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2F1B14;
     cursor: pointer;
-    min-width: 140px;
-    box-shadow: 0 2px 4px rgba(139, 69, 19, 0.2);
+    min-width: 160px;
+    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23654321' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
 }
 
 .grid-size-selector select:hover {
-    background: linear-gradient(135deg, #DEB887, #CD853F);
-    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+    background: linear-gradient(135deg, #DEB887 0%, #CD853F 50%, #A0522D 100%);
+    box-shadow: 0 6px 12px rgba(139, 69, 19, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    border-color: #654321;
 }
 
 .grid-size-selector select:focus {
     outline: none;
-    border-color: #8B4513;
-    box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
+    border-color: #5D4E37;
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.3), 0 6px 12px rgba(139, 69, 19, 0.4);
+    transform: translateY(-1px);
+}
+
+.grid-size-selector select option {
+    background: #F5DEB3;
+    color: #2F1B14;
+    font-weight: 600;
+    padding: 8px;
 }
 
 button {
@@ -645,7 +668,18 @@ button.loading::after {
         font-size: 64px;
     }
 
+    .grid-size-selector {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 15px;
+    }
 
+    .grid-size-selector select {
+        min-width: 140px;
+        font-size: 14px;
+        padding: 10px 14px;
+        padding-right: 35px;
+    }
 
     button {
         flex: 1;
