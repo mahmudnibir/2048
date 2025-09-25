@@ -9,7 +9,7 @@
 ![GitHub license](https://img.shields.io/github/license/mahmudnibir/2048)
 ![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mahmudnibir/2048)
 ![GitHub Code Size](https://img.shields.io/github/languages/code-size/mahmudnibir/2048)
-![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20windows-blue) 
+![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20windows20%7C%20%Andoir%-blue) 
 
 ---
 # 2048 Game
