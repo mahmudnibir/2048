@@ -38,7 +38,7 @@ A modern implementation of the classic 2048 puzzle game, built with HTML, CSS, a
 - Game state preservation
 - Clean, modern UI
 
-<img src="img/Screenshot 2025-03-15 021116.png" alt="2048" width="500">
+<img src="img/Screenshot 2025-09-25 142956.png" alt="2048" width="500">
 
 ## Controls
 
