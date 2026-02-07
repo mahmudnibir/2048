@@ -34,6 +34,18 @@ body::before {
     z-index: 0;
 }
 
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(255, 215, 0, 0.15), transparent 45%),
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.08), transparent 45%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 0;
+}
+
 .container {
     position: relative;
     z-index: 1;
@@ -79,6 +91,18 @@ body::before {
     position: relative;
 }
 
+.game-section::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 16px;
+    background: conic-gradient(from 120deg, rgba(255, 215, 0, 0.35), transparent 30%, rgba(255, 215, 0, 0.35));
+    opacity: 0.6;
+    filter: blur(12px);
+    z-index: -1;
+    animation: haloPulse 6s ease-in-out infinite;
+}
+
 .info-section {
     width: 320px;
     display: flex;
@@ -110,6 +134,12 @@ body::before {
     border-bottom: 2px solid rgba(139, 115, 85, 0.3);
 }
 
+.title-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
 h1 {
     font-family: 'Playfair Display', serif;
     font-size: 72px;
@@ -120,6 +150,37 @@ h1 {
         4px 4px 8px rgba(0, 0, 0, 0.3);
     margin: 0;
     letter-spacing: -1px;
+}
+
+.supreme-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #3C1810, #8B4513);
+    color: #FFD700;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 215, 0, 0.6);
+}
+
+.supreme-badge i {
+    font-size: 14px;
+}
+
+.supreme-tagline {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #5D4E37;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .score-container {
@@ -441,6 +502,16 @@ button.loading::after {
     box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4);
 }
 
+.grid-container::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
 /* Dynamic grid sizes */
 .grid-container.grid-4x4 {
     grid-template-columns: repeat(4, 1fr) !important;
@@ -600,6 +671,23 @@ button.loading::after {
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
+.tile-4096,
+.tile-8192 {
+    background: linear-gradient(145deg, #1d0f0a 0%, #120905 100%);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 215, 0, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+        0 12px 22px rgba(0, 0, 0, 0.6),
+        0 0 25px rgba(255, 215, 0, 0.45);
+    color: #FFD700;
+    border: 2px solid rgba(255, 215, 0, 0.8);
+}
+
+.tile-4096 span,
+.tile-8192 span {
+    font-size: 20px;
+}
+
 .game-message {
     display: none;
     position: absolute;
@@ -740,6 +828,10 @@ button.loading::after {
         text-align: center;
     }
 
+    .title-stack {
+        align-items: center;
+    }
+
     h1 {
         font-size: 52px;
         margin-bottom: 0;
@@ -800,6 +892,11 @@ button.loading::after {
         font-size: 15px;
         text-align: center;
         margin-bottom: 12px;
+    }
+
+    .supreme-tagline {
+        font-size: 12px;
+        margin-bottom: 14px;
     }
 
     .game-container {
@@ -1068,6 +1165,17 @@ button.loading::after {
 @keyframes goldGlow {
     0% { opacity: 0.5; }
     100% { opacity: 0.8; }
+}
+
+@keyframes haloPulse {
+    0%, 100% {
+        opacity: 0.45;
+        transform: scale(0.98);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
 }
 
 
